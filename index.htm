@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة حصاد - سوق المحاصيل الرقمي</title>
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --primary-color: #2C7865; /* أخضر داكن */
+            --secondary-color: #54B435; /* أخضر فاتح */
+            --accent-color: #FFC94A; /* أصفر للتمييز */
+            --background-color: #F8F9FA;
+            --text-color: #333;
+            --card-bg: #FFFFFF;
+            --border-color: #E0E0E0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+
+        /* --- General Styling --- */
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header --- */
+        .header {
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        .header h1 i {
+            margin-left: 10px;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+
+        .hero-section h2 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .user-type-selection {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .user-type-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 250px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .user-type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            border-color: var(--accent-color);
+        }
+
+        .user-type-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .user-type-card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
+        /* --- Dashboard Section --- */
+        .dashboard-section {
+            display: none;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .dashboard-header h2 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2rem;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Tabs for Dashboards */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #888;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px 3px 0 0;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(44, 120, 101, 0.2);
+            outline: none;
+        }
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            background-color: #4aa02c;
+        }
+
+        /* Product/Order List */
+        .item-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .item-card {
+            background-color: #fdfdfd;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .item-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .item-card-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #eee;
+        }
+        .item-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        .item-card-details {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .item-card-details strong {
+            color: var(--text-color);
+        }
+        .item-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        .btn-action {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-action.delete {
+            background-color: #dc3545;
+        }
+        .btn-action.delete:hover {
+            background-color: #c82333;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background-color: #f1f3f5;
+            border-radius: var(--border-radius);
+            grid-column: 1 / -1; /* Span full width */
+        }
+        .empty-state i {
+            font-size: 3rem;
+            color: #ced4da;
+            margin-bottom: 15px;
+        }
+        .empty-state p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 60px;
+        }
+
+        /* Modal for Confirmation */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            animation: fadeIn 0.3s;
+        }
+        .modal-content i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        .modal-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .modal-content p {
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: scale(0.9);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1><i class="fas fa-leaf"></i> منصة حصاد</h1>
+    </header>
+
+    <main class="container">
+        <!-- Home Section: User Type Selection -->
+        <section id="home-section">
+            <div class="hero-section">
+                <h2>السوق الرقمي الأول للمحاصيل في السودان</h2>
+                <p>نوصلك مباشرة بالمزارعين، المخازن، والمشترين. عزز أرباحك وقلل الهدر بكل سهولة.</p>
+            </div>
+            <div class="user-type-selection">
+                <div class="user-type-card" onclick="showDashboard('farmer-dashboard')">
+                    <i class="fas fa-tractor"></i>
+                    <h3>أنا مزارع</h3>
+                </div>
+                <div class="user-type-card" onclick="showDashboard('storage-dashboard')">
+                    <i class="fas fa-warehouse"></i>
+                    <h3>أنا صاحب مخزن</h3>
+                </div>
+                <div class="user-type-card" onclick="showDashboard('buyer-dashboard')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>أنا مشتري</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Farmer Dashboard -->
+        <section id="farmer-dashboard" class="dashboard-section">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-tractor"></i> لوحة تحكم المزارع</h2>
+                <button class="back-btn" onclick="showDashboard('home-section')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+            </div>
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'add-product')">إضافة محصول جديد</button>
+                <button class="tab-button" onclick="openTab(event, 'my-products')">محاصيلي المعروضة</button>
+            </div>
+
+            <div id="add-product" class="tab-content active">
+                <form id="add-product-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="product-name">اسم المحصول:</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-quantity">الكمية (بالطن):</label>
+                            <input type="number" id="product-quantity" min="0.1" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price">السعر (للطن):</label>
+                            <input type="number" id="product-price" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">الوصف (الجودة، النوع، إلخ):</label>
+                        <textarea id="product-description" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fas fa-plus"></i> إضافة المحصول</button>
+                </form>
+            </div>
+
+            <div id="my-products" class="tab-content">
+                <div id="farmer-products-list" class="item-list">
+                    <!-- Farmer's products will be rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Storage Dashboard -->
+        <section id="storage-dashboard" class="dashboard-section">
+             <div class="dashboard-header">
+                <h2><i class="fas fa-warehouse"></i> لوحة تحكم المخزن</h2>
+                <button class="back-btn" onclick="showDashboard('home-section')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+            </div>
+            <div class="empty-state">
+                <i class="fas fa-tools"></i>
+                <p>هذا القسم قيد التطوير حاليًا وسيكون متاحًا قريبًا.</p>
+            </div>
+        </section>
+
+        <!-- Buyer Dashboard -->
+        <section id="buyer-dashboard" class="dashboard-section">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-shopping-cart"></i> لوحة تحكم المشتري</h2>
+                <button class="back-btn" onclick="showDashboard('home-section')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+            </div>
+             <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'available-products-tab')">المحاصيل المتاحة</button>
+                <button class="tab-button" onclick="openTab(event, 'my-orders-tab')">طلباتي</button>
+            </div>
+            
+            <div id="available-products-tab" class="tab-content active">
+                <div class="form-group">
+                    <label for="search-product">ابحث عن محصول:</label>
+                    <input type="text" id="search-product" placeholder="اكتب اسم المحصول..." onkeyup="filterProducts()">
+                </div>
+                <div id="available-products-list" class="item-list">
+                    <!-- Available products will be rendered here -->
+                </div>
+            </div>
+
+            <div id="my-orders-tab" class="tab-content">
+                 <div id="buyer-orders-list" class="item-list">
+                    <!-- Buyer's orders will be rendered here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 منصة حصاد. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle"></i>
+            <h3 id="modal-title">تم بنجاح!</h3>
+            <p id="modal-message">تمت العملية بنجاح.</p>
+            <button class="modal-close" onclick="closeModal()">حسنًا</button>
+        </div>
+    </div>
+
+<script>
+    // --- Mock Data (would come from a database in a real app) ---
+    let products = [];
+    let buyerOrders = [];
+    let productIdCounter = 0;
+
+    // --- Initial Page Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+        showDashboard('home-section');
+        addInitialData();
+        renderAllLists();
+    });
+
+    function addInitialData() {
+        const initialProducts = [
+            { id: ++productIdCounter, name: 'سمسم أبيض', quantity: 15, price: 500000, description: 'جودة عالية، محصول الموسم الجديد.', image: 'https://via.placeholder.com/150/54B435/FFFFFF?text=Sesame' },
+            { id: ++productIdCounter, name: 'فول سوداني', quantity: 25, price: 350000, description: 'خالي من الشوائب، جاهز للتصدير.', image: 'https://via.placeholder.com/150/FFC94A/333333?text=Peanut' },
+            { id: ++productIdCounter, name: 'صمغ عربي', quantity: 5, price: 1200000, description: 'درجة أولى، نوع الهشاب.', image: 'https://via.placeholder.com/150/2C7865/FFFFFF?text=Gum' }
+        ];
+        products = [...initialProducts];
+    }
+
+    function renderAllLists() {
+        renderFarmerProducts();
+        renderAvailableProducts();
+        renderBuyerOrders();
+    }
+
+    // --- Navigation Logic ---
+    function showDashboard(dashboardId) {
+        document.querySelectorAll('.dashboard-section, #home-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        const targetSection = document.getElementById(dashboardId);
+        targetSection.style.display = 'block';
+        
+        if(dashboardId !== 'home-section') {
+            const firstTab = targetSection.querySelector('.tab-button');
+            if(firstTab) firstTab.click();
+        }
+    }
+
+    function openTab(evt, tabName) {
+        const parent = evt.target.closest('.dashboard-section');
+        parent.querySelectorAll('.tab-content').forEach(tc => tc.style.display = "none");
+        parent.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove("active"));
+        parent.querySelector(`#${tabName}`).style.display = "block";
+        evt.currentTarget.classList.add("active");
+    }
+
+    // --- Farmer Dashboard Logic ---
+    document.getElementById('add-product-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('product-name').value;
+        const quantity = parseFloat(document.getElementById('product-quantity').value);
+        const price = parseFloat(document.getElementById('product-price').value);
+        const description = document.getElementById('product-description').value;
+
+        if (name && quantity > 0 && price >= 0) {
+            const newProduct = {
+                id: ++productIdCounter,
+                name: name,
+                quantity: quantity,
+                price: price,
+                description: description,
+                image: `https://via.placeholder.com/150/cccccc/FFFFFF?text=${encodeURIComponent(name.substring(0,3))}`
+            };
+            products.unshift(newProduct);
+            renderAllLists();
+            document.getElementById('add-product-form').reset();
+            showModal('تمت الإضافة بنجاح', `تم عرض محصول ${name} في السوق.`);
+            document.querySelector('#farmer-dashboard .tab-button[onclick*="my-products"]').click();
+        } else {
+            alert('يرجى ملء جميع الحقول بشكل صحيح.');
+        }
+    });
+
+    function renderFarmerProducts() {
+        const listDiv = document.getElementById('farmer-products-list');
+        listDiv.innerHTML = '';
+        // In a real app, this would be filtered by farmer ID. For this demo, we show all.
+        if (products.length === 0) {
+            listDiv.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><p>لم تقم بإضافة أي محاصيل بعد.</p></div>`;
+            return;
+        }
+        products.forEach(product => listDiv.appendChild(createProductCard(product, 'farmer')));
+    }
+
+    function deleteProduct(id) {
+        if (confirm('هل أنت متأكد من رغبتك في حذف هذا المحصول؟')) {
+            products = products.filter(p => p.id !== id);
+            renderAllLists();
+        }
+    }
+
+    // --- Buyer Dashboard Logic ---
+    function renderAvailableProducts(filteredProducts = products) {
+        const listDiv = document.getElementById('available-products-list');
+        listDiv.innerHTML = '';
+        if (filteredProducts.length === 0) {
+            listDiv.innerHTML = `<div class="empty-state"><i class="fas fa-search"></i><p>لا توجد محاصيل متاحة حاليًا أو مطابقة لبحثك.</p></div>`;
+            return;
+        }
+        filteredProducts.forEach(product => listDiv.appendChild(createProductCard(product, 'buyer')));
+    }
+
+    function filterProducts() {
+        const searchTerm = document.getElementById('search-product').value.toLowerCase();
+        const filtered = products.filter(product =>
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
+        );
+        renderAvailableProducts(filtered);
+    }
+
+    function placeOrder(productId) {
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            const orderQuantityStr = prompt(`كم طن ترغب في شرائه من ${product.name}؟ (الحد الأقصى: ${product.quantity} طن)`);
+            if (orderQuantityStr === null) return;
+
+            const quantity = parseFloat(orderQuantityStr);
+
+            if (quantity && quantity > 0 && quantity <= product.quantity) {
+                const newOrder = {
+                    id: Date.now(),
+                    productId: product.id,
+                    productName: product.name,
+                    orderedQuantity: quantity,
+                    totalPrice: quantity * product.price,
+                    status: 'في انتظار الموافقة',
+                    image: product.image
+                };
+                buyerOrders.unshift(newOrder);
+                product.quantity -= quantity;
+                if (product.quantity <= 0) {
+                    products = products.filter(p => p.id !== productId);
+                }
+                renderAllLists();
+                showModal('تم إرسال طلبك', `تم تقديم طلب شراء ${quantity} طن من ${product.name}.`);
+                document.querySelector('#buyer-dashboard .tab-button[onclick*="my-orders-tab"]').click();
+            } else {
+                alert('يرجى إدخال كمية صالحة لا تتجاوز الكمية المتاحة.');
+            }
+        }
+    }
+
+    function renderBuyerOrders() {
+        const listDiv = document.getElementById('buyer-orders-list');
+        listDiv.innerHTML = '';
+        if (buyerOrders.length === 0) {
+            listDiv.innerHTML = `<div class="empty-state"><i class="fas fa-receipt"></i><p>لا توجد لديك طلبات حاليًا.</p></div>`;
+            return;
+        }
+        buyerOrders.forEach(order => {
+            const item = document.createElement('div');
+            item.className = 'item-card';
+            item.innerHTML = `
+                <div class="item-card-header">
+                    <img src="${order.image}" alt="${order.productName}">
+                    <div>
+                        <h4 class="item-card-title">طلب: ${order.productName}</h4>
+                        <span class="price">${order.totalPrice.toLocaleString()} جنيه</span>
+                    </div>
+                </div>
+                <div class="item-card-details">
+                    <p><strong>الكمية المطلوبة:</strong> ${order.orderedQuantity} طن</p>
+                    <p><strong>الحالة:</strong> <span style="color: var(--accent-color); font-weight: bold;">${order.status}</span></p>
+                </div>
+                <div class="item-card-footer">
+                    <button class="btn-action delete" onclick="cancelOrder(${order.id})"><i class="fas fa-times"></i> إلغاء الطلب</button>
+                </div>
+            `;
+            listDiv.appendChild(item);
+        });
+    }
+    
+    function cancelOrder(orderId) {
+        const orderIndex = buyerOrders.findIndex(o => o.id === orderId);
+        if (orderIndex > -1) {
+            const order = buyerOrders[orderIndex];
+            const product = products.find(p => p.id === order.productId);
+            if (product) {
+                product.quantity += order.orderedQuantity;
+            } else {
+                // If product was fully bought and removed, add it back
+                products.unshift({
+                    id: order.productId,
+                    name: order.productName,
+                    quantity: order.orderedQuantity,
+                    price: order.totalPrice / order.orderedQuantity,
+                    description: 'محصول تمت استعادته بعد إلغاء الطلب.',
+                    image: order.image
+                });
+            }
+            buyerOrders.splice(orderIndex, 1);
+            renderAllLists();
+        }
+    }
+
+    // --- Reusable Components & Utilities ---
+    function createProductCard(product, userType) {
+        const item = document.createElement('div');
+        item.className = 'item-card';
+        
+        let footerButton = '';
+        if (userType === 'farmer') {
+            footerButton = `<button class="btn-action delete" onclick="deleteProduct(${product.id})"><i class="fas fa-trash"></i> حذف</button>`;
+        } else if (userType === 'buyer') {
+            footerButton = `<button class="btn-action" onclick="placeOrder(${product.id})"><i class="fas fa-shopping-basket"></i> طلب شراء</button>`;
+        }
+
+        item.innerHTML = `
+            <div class="item-card-header">
+                <img src="${product.image}" alt="${product.name}">
+                <div>
+                    <h4 class="item-card-title">${product.name}</h4>
+                    <span class="price">${product.price.toLocaleString()} جنيه/طن</span>
+                </div>
+            </div>
+            <div class="item-card-details">
+                <p>${product.description}</p>
+                <p><strong>الكمية المتاحة:</strong> ${product.quantity} طن</p>
+            </div>
+            <div class="item-card-footer">
+                ${footerButton}
+            </div>
+        `;
+        return item;
+    }
+
+    const modal = document.getElementById('confirmationModal');
+    function showModal(title, message) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-message').innerText = message;
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
